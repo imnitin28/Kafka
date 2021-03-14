@@ -15,18 +15,19 @@ public class Producer {
         properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         properties.put("value.serializer", "com.knoldus.serializer.UserSerializer");
         KafkaProducer<String, User> producer = new KafkaProducer<>(properties);
+        //generate and send records for 4001 users along with hardcoded name i.e Nitin Mishra, random user age and hard coded course.
         try {
             Random rand = new Random();
             for (int i = 1000; i <= 5000; i++) {
 
-                User user = new User(i, "Nitin Mishra", rand.nextInt(10)+5, "MCA");
+                User user = new User(i, "Nitin Mishra", rand.nextInt(10)+2, "MCA");
                 producer.send(new ProducerRecord<String, User>("UserTopic", String.valueOf(i), user));
                 System.out.println("Message " + user.toString() + " sent...");
             }
         }catch (Exception e){
             e.printStackTrace();
         }finally {
-            producer.close();
+            producer.close(); //producer must be closed to not leak resources,i.e., connections, thread pools, buffers
         }
     }
 }

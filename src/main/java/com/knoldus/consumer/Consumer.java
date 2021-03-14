@@ -18,6 +18,7 @@ public class Consumer {
         Thread thread = new Thread(c);
         thread.start();
     }
+    //Receiving user records from producer and storing that into a file named Records.txt
     public static void consumer() {
         Properties properties = new Properties();
         properties.put("bootstrap.servers", "localhost:9092");
@@ -47,15 +48,12 @@ public class Consumer {
         }catch (Exception e){
             System.out.println(e.getMessage());
         }finally {
-
-            kafkaConsumer.close();
+            kafkaConsumer.close(); //This will close the network connections and sockets.
         }
     }
 }
 
 class ConsumerListener implements Runnable {
-
-
     @Override
     public void run() {
         Consumer.consumer();

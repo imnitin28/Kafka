@@ -23,8 +23,6 @@ public class UserSerializer implements Serializer {
         return retVal;
     }
 
-
-
     @Override
     public void close() {
 
